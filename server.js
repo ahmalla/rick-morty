@@ -17,8 +17,6 @@ console.log('connected to db!')
 
 // Middleware
 app.use(express.json());
-
-
 // Route Middleware
 app.use('/api/user', authRoute);
 
