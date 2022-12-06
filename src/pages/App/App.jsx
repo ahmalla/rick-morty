@@ -1,11 +1,18 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap";
 import React, { useState, useEffect } from "react";
-import Search from './components/Search/Search';
-import Card from './components/Card/Card';
-import Pagination from './components/Pagination/Pagination';
-import Filter from './components/Filter/Filter';
-import NavBar from './components/NavBar/NavBar';
+
+let [fetchedData, updateFetchedData] = useState([]);
+let { info, results } = fetchedData;
+
+let api = `https://rickandmortyapi.com/api/character/?page=1`
+
+useEffect(() => {
+  (async function () {
+    let data = await fetch(api).then((res) => res.json());
+    updateFetchedData(data);
+  })();
+}, [api]);
 
 
 function App() {
@@ -25,6 +32,7 @@ function App() {
 </div>
   );
 }
+
 
 export default App;
 
