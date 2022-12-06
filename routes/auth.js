@@ -18,11 +18,21 @@ router.post('/register', async (req, res) => {
     });
     try{
         const savedUser = await user.save();
-        res.send(savedUser);
+        res.send({ user: user._id });
     }catch(err){
         res.status(400).send(err);
     }
 });
+
+// Login
+router.post('/login', async (req, res) => {
+     // checking if email already exists
+     const user = await User.findOne({email: req.body.email});
+     if(!user) return res.status(400).send('Email does not exist');
+    // check if password is correct
+    const match = await bcrypt.compare(req.body.password, user.password);
+    if(!match) return res.status(400).send('Invalid Password')
+})
 
 
 module.exports = router;
